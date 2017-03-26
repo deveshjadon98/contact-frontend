@@ -31,9 +31,21 @@ class MainContent extends Component {
                 // }
             ]
         };
+        this.updateStateSearchResult = this.updateStateSearchResult.bind(this);
     }
 
-    componentWillMount(){
+    updateStateSearchResult(value){
+        // console.log('SEARCH QUERY',value);
+        var data = this.state.contacts;
+        data = data.filter(function(elem){
+            var regEx = new RegExp(value, 'gi');
+            return ( value === '' || elem.first_name.match(regEx) || elem.last_name.match(regEx) ) ? elem : '';
+        });
+        this.setState({contacts : data});
+        console.log('STATE',this.state);
+    }
+
+    componentDidMount(){
         // var storage = localStorage.getItem('storage');
         // console.log(storage);
         // if(storage){
@@ -51,9 +63,7 @@ class MainContent extends Component {
             return response.json();
         })
         .then(function(data) {
-            // console.log(data.data[0]);
             let storage = data.data;
-            console.log(JSON.stringify(storage));
             that.setState({contacts : storage});
         });
     }
@@ -66,7 +76,7 @@ class MainContent extends Component {
         return (
             <div className="wrapper-content col-md-9 col-sm-9 col-xs-9">
                 <div className="tab-content tabs-wrapper col-md-12 col-sm-12 col-xs-12 np">
-                    { this.props.toggleProp ? <ContactList formStateProp={ this.updateStateToForm } contactsData={this.state.contacts}/> :  <ContactForm />}
+                    { this.props.toggleProp ? <ContactList updateStateSearchResult={this.updateStateSearchResult} formStateProp={ this.updateStateToForm } contactsData={this.state.contacts}/> :  <ContactForm />}
                 </div>
             </div>
         );
