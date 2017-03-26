@@ -6,7 +6,6 @@ import './mainContent.css';
 class MainContent extends Component {
     constructor(props) {
         super(props);
-        this.updateStateToForm = this.updateStateToForm.bind(this);
         this.state = {
             contacts : [
                 // {
@@ -30,19 +29,35 @@ class MainContent extends Component {
                 //     }],
                 // }
             ],
-            searchResult : []
+            searchResult : [],
+            regRx : '',
         };
+        this.updateStateToForm = this.updateStateToForm.bind(this);
+        this.paginatedResult = this.paginatedResult.bind(this);
         this.updateStateSearchResult = this.updateStateSearchResult.bind(this);
     }
 
     updateStateSearchResult(value){
         // console.log('SEARCH QUERY',value);
         var data = this.state.contacts;
+        var regEx = new RegExp(value, 'gi');
         data = data.filter(function(elem){
-            var regEx = new RegExp(value, 'gi');
             return ( value === '' || elem.first_name.match(regEx) || elem.last_name.match(regEx) ) ? elem : '';
         });
-        this.setState({searchResult : data});
+        this.setState({searchResult : data.slice(0, 4),regEx : regEx});
+    }
+
+    paginatedResult(value){
+
+        value = parseInt(value, 10);
+        // console.log('paginatedResult QUERY',value);
+        var start = value === 1 ? 0 : Math.pow(2, value); 
+        var end = Math.pow(2, value + 1); 
+        var data = this.state.contacts;
+        data = data.filter(function(elem){
+            return ( this.state.regEx === '' || elem.first_name.match(this.state.regEx) || elem.last_name.match(this.state.regEx) ) ? elem : '';
+        }.bind(this));
+        this.setState({searchResult : data.slice(start, end)});
     }
 
     componentDidMount(){
@@ -64,7 +79,7 @@ class MainContent extends Component {
         })
         .then(function(data) {
             let storage = data.data;
-            that.setState({contacts : storage,searchResult:storage});
+            that.setState({contacts : storage,searchResult : storage.slice(0, 4)});
         });
     }
 
@@ -76,7 +91,7 @@ class MainContent extends Component {
         return (
             <div className="wrapper-content col-md-9 col-sm-9 col-xs-9">
                 <div className="tab-content tabs-wrapper col-md-12 col-sm-12 col-xs-12 np">
-                    { this.props.toggleProp ? <ContactList updateStateSearchResult={this.updateStateSearchResult} formStateProp={ this.updateStateToForm } contactsData={this.state.searchResult}/> :  <ContactForm />}
+                    { this.props.toggleProp ? <ContactList updateStateSearchResult={this.updateStateSearchResult} formStateProp={ this.updateStateToForm } contactsData={this.state.searchResult} paginatedResult={this.paginatedResult} totalCount={this.state.contacts.length}/> :  <ContactForm />}
                 </div>
             </div>
         );

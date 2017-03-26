@@ -4,6 +4,15 @@ import Pagination from './../pagination/pagination';
 import './listData.css';
 
 class ListData extends Component {
+    constructor(props) {
+        super(props);
+        this.paginatedResult = this.paginatedResult.bind(this);
+    }
+    
+    paginatedResult(value){
+        this.props.paginatedResult(value);
+    }
+
     render() {
         var indents = [];
         var count = 1;
@@ -15,7 +24,7 @@ class ListData extends Component {
         }else{
             indents.push(<h1>NO POSTS.</h1>);
         }
-        
+
         return (
             <div className="table-responsive">
                 <table className="table table-bordered table-hover">
@@ -31,7 +40,7 @@ class ListData extends Component {
                         {indents}                     
                     </tbody>
                 </table>
-                <Pagination />
+                <Pagination contactsData={this.props.contactsData} paginatedResult={this.paginatedResult} totalCount={this.props.totalCount}/>
             </div>
         );
     }
