@@ -85,17 +85,40 @@ class Form extends Component {
     }
 
     handleSubmit(event) {
-        console.log(JSON.stringify(this.state));
-        var storage = localStorage.getItem('storage');
-        if(storage){
-            storage = JSON.parse(storage);
-            storage.push(this.state);
-            localStorage.setItem('storage',JSON.stringify(storage));
-        }else{
-            var contacts = [];
-            contacts.push(this.state);
-            localStorage.setItem('storage',JSON.stringify(contacts));
-        }
+        // console.log(JSON.stringify(this.state));
+        // var storage = localStorage.getItem('storage');
+        // if(storage){
+        //     storage = JSON.parse(storage);
+        //     storage.push(this.state);
+        //     localStorage.setItem('storage',JSON.stringify(storage));
+        // }else{
+        //     var contacts = [];
+        //     contacts.push(this.state);
+        //     localStorage.setItem('storage',JSON.stringify(contacts));
+        // }
+
+        var url = 'http://localhost:8080/api/contact';
+        console.log('Request data', this.state);  
+        fetch(url, {  
+            method: 'POST',  
+            headers: {  
+            "Content-type": "application/json"  
+            },  
+            body: JSON.stringify(this.state) 
+        })
+        .then(function(response) {
+            console.log('Request data', response);  
+            if (response.status >= 400) {
+            throw new Error("Bad response from server");
+            }
+            return response.json();
+        })
+        .then(function (data) {  
+            console.log('Request succeeded with JSON response', data);  
+        })  
+        .catch(function (error) {  
+            console.log('Request failed', error);  
+        });
     }
 
     addNewEmail(event){

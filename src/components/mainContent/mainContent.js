@@ -34,12 +34,28 @@ class MainContent extends Component {
     }
 
     componentWillMount(){
-        var storage = localStorage.getItem('storage');
-        console.log(storage);
-        if(storage){
-            storage = JSON.parse(storage);
-            this.setState({contacts : storage});
-        }
+        // var storage = localStorage.getItem('storage');
+        // console.log(storage);
+        // if(storage){
+        //     storage = JSON.parse(storage);
+        //     this.setState({contacts : storage});
+        // }
+        var that = this;
+        var url = 'http://localhost:8080/api/contacts'
+
+        fetch(url)
+        .then(function(response) {
+            if (response.status >= 400) {
+            throw new Error("Bad response from server");
+            }
+            return response.json();
+        })
+        .then(function(data) {
+            // console.log(data.data[0]);
+            let storage = data.data;
+            console.log(JSON.stringify(storage));
+            that.setState({contacts : storage});
+        });
     }
 
     updateStateToForm(){
