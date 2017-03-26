@@ -16,7 +16,7 @@ class SingleRecord extends Component {
         }
         return (
             <tr>
-                <td>4</td>
+                <td>{this.props.count}</td>
                 <td>{record.first_name+' '+record.last_name}</td>
                 <td>{emails}</td>
                 <td>{phones}</td>

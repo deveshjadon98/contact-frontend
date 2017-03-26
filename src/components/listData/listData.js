@@ -6,13 +6,16 @@ import './listData.css';
 class ListData extends Component {
     render() {
         var indents = [];
+        var count = 1;
         if(this.props.contactsData !== ""){
             this.props.contactsData.forEach((e) => {
-                indents.push(<SingleRecord data={e}/>);
+                indents.push(<SingleRecord data={e} count={count}/>);
+                count++;
             });
         }else{
             indents.push(<h1>NO POSTS.</h1>);
         }
+        
         return (
             <div className="table-responsive">
                 <table className="table table-bordered table-hover">

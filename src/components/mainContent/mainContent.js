@@ -29,7 +29,8 @@ class MainContent extends Component {
                 //         type : 'work'
                 //     }],
                 // }
-            ]
+            ],
+            searchResult : []
         };
         this.updateStateSearchResult = this.updateStateSearchResult.bind(this);
     }
@@ -41,7 +42,7 @@ class MainContent extends Component {
             var regEx = new RegExp(value, 'gi');
             return ( value === '' || elem.first_name.match(regEx) || elem.last_name.match(regEx) ) ? elem : '';
         });
-        this.setState({contacts : data});
+        this.setState({searchResult : data});
         console.log('STATE',this.state);
     }
 
@@ -64,7 +65,7 @@ class MainContent extends Component {
         })
         .then(function(data) {
             let storage = data.data;
-            that.setState({contacts : storage});
+            that.setState({contacts : storage,searchResult:storage});
         });
     }
 
@@ -76,7 +77,7 @@ class MainContent extends Component {
         return (
             <div className="wrapper-content col-md-9 col-sm-9 col-xs-9">
                 <div className="tab-content tabs-wrapper col-md-12 col-sm-12 col-xs-12 np">
-                    { this.props.toggleProp ? <ContactList updateStateSearchResult={this.updateStateSearchResult} formStateProp={ this.updateStateToForm } contactsData={this.state.contacts}/> :  <ContactForm />}
+                    { this.props.toggleProp ? <ContactList updateStateSearchResult={this.updateStateSearchResult} formStateProp={ this.updateStateToForm } contactsData={this.state.searchResult}/> :  <ContactForm />}
                 </div>
             </div>
         );

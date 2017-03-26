@@ -8,8 +8,14 @@ class ContactList extends Component {
         super(props);
         this.updateStateSearchResult = this.updateStateSearchResult.bind(this);
     }
+    
     updateStateSearchResult(value){
         this.props.updateStateSearchResult(value);
+    }
+
+    componentWillMount(){
+        console.log('this.props.contactsData',this.props.contactsData)
+        this.setState({contacts : this.props.contactsData});
     }
 
     render() {
