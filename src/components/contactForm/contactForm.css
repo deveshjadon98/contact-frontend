@@ -1,0 +1,17 @@
+.tab-heading{
+    font-size: 22px;
+    color: #333;
+    border-bottom: 2px solid #dae2e6;
+    padding-bottom: 15px;
+}
+
+button.btn.btn-adContact {
+    float: right;
+    background: #269fd8;
+    border-radius: 3px;
+    font-size: 12px;
+    text-transform: uppercase;
+    padding: 7px 15px;
+    color: #fff;
+    margin-top: 10px;
+}

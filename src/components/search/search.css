@@ -1,0 +1,10 @@
+.search-label {
+    float: left;
+    margin-top: 6px;
+    margin-right: 15px;
+    font-family: montserratsemibold;
+}
+.search-box {
+    float: left;
+    margin-top: 10px;
+}
