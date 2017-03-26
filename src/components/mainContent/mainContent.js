@@ -43,7 +43,6 @@ class MainContent extends Component {
             return ( value === '' || elem.first_name.match(regEx) || elem.last_name.match(regEx) ) ? elem : '';
         });
         this.setState({searchResult : data});
-        console.log('STATE',this.state);
     }
 
     componentDidMount(){
