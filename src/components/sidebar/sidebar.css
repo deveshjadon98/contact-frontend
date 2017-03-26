@@ -1,0 +1,39 @@
+.left-sidebar {
+    background: #fff;
+    float: left;
+    position: fixed;
+    left: 0;
+    top: 72px;
+    bottom: 0;
+    border-right: 1px solid #dae2e6;
+    height: 100%;
+    width: 255px;
+    z-index: 9;
+}
+.left-sidebar ul {
+    padding: 0;
+    margin: 0;
+}
+.left-sidebar ul li{
+    list-style: none;
+}
+.left-sidebar ul li a{
+    font-size: 13px;
+    color: #777;
+    line-height: 14px;
+    float: left;
+    padding: 22px 15px;
+    border-bottom: 1px solid #e9eef0;
+    width: 100%;
+    text-align: center;
+    text-decoration: none;
+}
+.left-sidebar ul li.active a, 
+.left-sidebar ul li.active a, .left-sidebar ul li:hover a{
+    color: #269fd8;
+    transition: all 0.3s ease 0s !important;
+}
+.left-sidebar .tabs-left {
+    float: left;
+    width: 100%;
+}
